@@ -1,0 +1,45 @@
+# === Dependencies ===
+backend/venv/
+node_modules/
+
+# === Rust build ===
+src-tauri/target/
+
+# === Build-time generated (beforeBuildCommand outputs) ===
+src-tauri/python/
+src-tauri/backend/
+src-tauri/dist/
+
+# === Large binaries — downloaded per-platform in CI ===
+src-tauri/bin/ffmpeg
+src-tauri/bin/ffprobe
+bin/ffmpeg
+bin/ffprobe
+
+# === Packaged artifacts ===
+*.app
+*.dmg
+*.msi
+*.exe
+*.zip
+*.tar.gz
+
+# === IDE / OS ===
+.DS_Store
+.idea/
+.vscode/
+*.log
+.env
+.env.*
+
+# === Coverage / cache ===
+coverage/
+.nyc_output/
+__pycache__/
+*.pyc
+
+# === Source video (convert to .mp4 for README, .mov not tracked) ===
+assets/*.mp4
+
+assets/*.mov
+assets/*.mp4

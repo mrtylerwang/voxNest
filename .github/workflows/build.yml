@@ -1,0 +1,93 @@
+name: Build & Release (Apple Silicon only)
+
+# ===================== 产品定位 =====================
+# voxNest 是只为 Apple Silicon macOS 而生的本地 VoiceStudio。
+# MLX 推理框架硬依赖 arm64 + Apple Silicon AMX/NEON 指令集。
+# Intel Mac (x86_64) 无 MLX wheel，Windows/Linux 无推理路径。
+
+# ===================== 触发条件 =====================
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  # ============ macOS arm64（Apple Silicon，唯一受支持架构） ============
+  build-macos:
+    name: macOS (arm64, Apple Silicon)
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      # ffmpeg：brew 自动装 arm64 版本
+      - name: Install ffmpeg (brew)
+        run: |
+          brew install ffmpeg
+          mkdir -p bin
+          cp "$(brew --prefix ffmpeg)/bin/ffmpeg" bin/
+          cp "$(brew --prefix ffmpeg)/bin/ffprobe" bin/
+          chmod +x bin/ffmpeg bin/ffprobe
+          file bin/ffmpeg bin/ffprobe
+
+      # 嵌入式 Python：脚本自动检测 arm64 → aarch64-apple-darwin
+      - name: Setup embedded Python runtime
+        run: bash scripts/setup_python_runtime.sh
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run tauri build
+        env:
+          MACOSX_DEPLOYMENT_TARGET: "15.0"
+
+      - name: Collect artifacts (固定文件名)
+        run: |
+          mkdir -p dist-artifacts
+          # Tauri 产物带版本号：voxNest_0.8.12_aarch64.dmg
+          # 复制成固定名 voxNest_aarch64.dmg → README 硬编码 latest 链接永久有效
+          DMG=$(ls src-tauri/target/release/bundle/dmg/*.dmg 2>/dev/null | head -1)
+          if [ -n "$DMG" ]; then
+            cp "$DMG" dist-artifacts/voxNest_aarch64.dmg    # 固定名（latest 链接）
+            cp "$DMG" dist-artifacts/                         # 也保留原文件名（归档）
+          fi
+          # .app.zip / .app 本身不带版本号
+          cp src-tauri/target/release/bundle/macos/*.app dist-artifacts/ 2>/dev/null || true
+          cp src-tauri/target/release/bundle/macos/*.zip dist-artifacts/ 2>/dev/null || true
+          ls -lh dist-artifacts/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: voxnest-macos-arm64
+          path: dist-artifacts/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload to Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist-artifacts/*
+          fail_on_unmatched_files: false

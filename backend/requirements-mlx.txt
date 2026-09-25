@@ -1,0 +1,13 @@
+# VoxNest macOS MLX 加速依赖
+# 仅在 macOS Apple Silicon 上安装，用于 MLX 引擎推理
+
+# MLX 核心框架
+mlx>=0.20.0
+
+# mlx-audio 版本锁定：0.4.8 是最后一个同时支持 stt.utils 和 tts.utils API 的版本
+# 0.5.x 移除了 stt/utils.py 和 tts/utils.py，API 不兼容
+# mlx-audio-plus 支持 CosyVoice3 但不支持 SenseVoice ASR，故不使用
+mlx-audio==0.4.8
+
+# 音频处理（mlx-audio 依赖）
+librosa>=0.10.0

@@ -1,0 +1,3 @@
+/* System-level name (Dock / Finder / menu bar / Dock right-click) for English environments */
+"CFBundleName" = "voxNest";
+"CFBundleDisplayName" = "voxNest";

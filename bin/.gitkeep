@@ -1,0 +1,2 @@
+# ffmpeg binaries downloaded per-platform (see .github/workflows/build.yml)
+# or install manually: macOS → brew install ffmpeg; Windows → see README

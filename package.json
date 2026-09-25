@@ -1,0 +1,11 @@
+{
+  "name": "voxnest-tauri",
+  "private": true,
+  "version": "0.8.14",
+  "scripts": {
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

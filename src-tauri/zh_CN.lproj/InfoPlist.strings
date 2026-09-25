@@ -1,0 +1,3 @@
+/* 中文环境下的系统级名称（Dock / Finder / 菜单栏 / Dock 右键菜单） */
+"CFBundleName" = "声巢";
+"CFBundleDisplayName" = "声巢";

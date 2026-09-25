@@ -1,0 +1,16 @@
+{
+  "identifier": "default",
+  "description": "VoxNest 默认权限：dialog 选择目录、window 拖拽、core 基础能力",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:default",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "dialog:allow-message",
+    "dialog:allow-ask",
+    "dialog:allow-confirm",
+    "core:window:default",
+    "core:window:allow-start-dragging"
+  ]
+}

@@ -1,0 +1,26 @@
+# VoxNest 后端核心依赖
+# 所有平台通用，包含 FastAPI 服务、模型下载、音频处理、工具库
+
+# ===== Web 服务 =====
+fastapi>=0.115.0,<1.0
+uvicorn[standard]>=0.30.0,<1.0
+python-multipart>=0.0.9,<1.0
+pydantic>=2.7.0,<3.0
+
+# ===== 模型下载 =====
+modelscope>=1.20.0,<2.0
+huggingface-hub>=1.5.0,<2.0
+
+# ===== 音频处理 =====
+soundfile>=0.12.0
+numpy>=1.26.0
+
+# ===== MLX 隐式依赖 =====
+# mlx-audio 0.4.8 的 tts.utils 导入时间接引用 torch（通过模型注册表遍历）
+# 不添加会导致打包后 TTS 模型加载失败（ImportError 被误报为"mlx-audio 未安装"）
+torch>=2.0.0
+
+# ===== 工具库 =====
+tqdm>=4.65.0
+aiofiles>=23.0.0
+httpx>=0.27.0

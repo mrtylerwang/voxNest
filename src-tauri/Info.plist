@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleName</key>
+  <string>voxNest</string>
+  <key>CFBundleDisplayName</key>
+  <string>voxNest</string>
+  <key>CFBundleExecutable</key>
+  <string>voxnest</string>
+  <key>CFBundleIdentifier</key>
+  <string>com.voxnest.studio</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleVersion</key>
+  <string>0.8.14</string>
+  <key>CFBundleShortVersionString</key>
+  <string>0.8.14</string>
+  <key>CFBundleIconFile</key>
+  <string>icon.icns</string>
+  <key>LSHasLocalizedDisplayName</key>
+  <true/>
+  <key>LSMinimumSystemVersion</key>
+  <string>15.0</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+    <key>NSAllowsArbitraryLoadsInWebContent</key>
+    <true/>
+  </dict>
+</dict>
+</plist>
