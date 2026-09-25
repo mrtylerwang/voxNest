@@ -1,6 +1,6 @@
 [package]
 name = "voxnest"
-version = "0.8.14"
+version = "0.8.15"
 description = "voxNest · 声巢 — 一个完全本地的 VoiceStudio"
 edition = "2021"
 

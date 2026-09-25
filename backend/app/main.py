@@ -12,7 +12,7 @@ from app.scheduler.platform import assert_supported
 assert_supported()
 
 # 版本号单一事实来源：FastAPI version 与 health 返回均读取此处
-APP_VERSION = "0.8.14"
+APP_VERSION = "0.8.15"
 
 # === 下载相关环境变量（必须在 import huggingface_hub / modelscope 之前设置）===
 # HuggingFace: 禁用 xet 协议（会返回 401 Unauthorized），慢网络调高超时
